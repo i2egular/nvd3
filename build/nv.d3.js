@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.2-dev (https://github.com/novus/nvd3) 2016-02-05 */
+/* nvd3 version 1.8.2-dev (https://github.com/novus/nvd3) 2016-03-15 */
 (function(){
 
 // set up main nv object
@@ -3672,7 +3672,7 @@ nv.models.cumulativeLineChart = function() {
                     });
 
                 //Highlight the tooltip entry based on which point the mouse is closest to.
-                if (allData.length > 2) {
+                if (allData.length > 0) {
                     var yValue = chart.yScale().invert(e.mouseY);
                     var domainExtent = Math.abs(chart.yScale().domain()[0] - chart.yScale().domain()[1]);
                     var threshold = 0.03 * domainExtent;
@@ -4731,13 +4731,13 @@ nv.models.furiousLegend = function() {
                 var seriesWidths = [];
                 series.each(function(d,i) {
                     var legendText;
-                    if (getKey(d).length > maxKeyLength) { 
+                    if (getKey(d) && (getKey(d).length > maxKeyLength)) {
                         var trimmedKey = getKey(d).substring(0, maxKeyLength);
                         legendText = d3.select(this).select('text').text(trimmedKey + "...");
                         d3.select(this).append("svg:title").text(getKey(d));
                     } else {
                         legendText = d3.select(this).select('text');
-                    } 
+                    }
                     var nodeTextLength;
                     try {
                         nodeTextLength = legendText.node().getComputedTextLength();
@@ -5709,13 +5709,13 @@ nv.models.legend = function() {
                 var seriesWidths = [];
                 series.each(function(d,i) {
                     var legendText;
-                    if (getKey(d).length > maxKeyLength) { 
+                    if (getKey(d) && (getKey(d).length > maxKeyLength)) {
                         var trimmedKey = getKey(d).substring(0, maxKeyLength);
                         legendText = d3.select(this).select('text').text(trimmedKey + "...");
                         d3.select(this).append("svg:title").text(getKey(d));
                     } else {
                         legendText = d3.select(this).select('text');
-                    } 
+                    }
                     var nodeTextLength;
                     try {
                         nodeTextLength = legendText.node().getComputedTextLength();
@@ -6548,7 +6548,7 @@ nv.models.lineChart = function() {
                         });
                     });
                 //Highlight the tooltip entry based on which point the mouse is closest to.
-                if (allData.length > 2) {
+                if (allData.length > 0) {
                     var yValue = chart.yScale().invert(e.mouseY);
                     var domainExtent = Math.abs(chart.yScale().domain()[0] - chart.yScale().domain()[1]);
                     var threshold = 0.03 * domainExtent;
@@ -9307,10 +9307,12 @@ nv.models.multiChart = function() {
             stack1
                 .width(availableWidth)
                 .height(availableHeight)
+                .interpolate(interpolate)
                 .color(color_array.filter(function(d,i) { return !data[i].disabled && data[i].yAxis == 1 && data[i].type == 'area'}));
             stack2
                 .width(availableWidth)
                 .height(availableHeight)
+                .interpolate(interpolate)
                 .color(color_array.filter(function(d,i) { return !data[i].disabled && data[i].yAxis == 2 && data[i].type == 'area'}));
 
             g.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -13498,7 +13500,7 @@ nv.models.stackedAreaChart = function() {
                 allData.reverse();
 
                 //Highlight the tooltip entry based on which stack the mouse is closest to.
-                if (allData.length > 2) {
+                if (allData.length > 0) {
                     var yValue = chart.yScale().invert(e.mouseY);
                     var yDistMax = Infinity, indexToHighlight = null;
                     allData.forEach(function(series,i) {

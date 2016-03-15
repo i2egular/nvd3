@@ -382,7 +382,7 @@ nv.models.stackedAreaChart = function() {
                 allData.reverse();
 
                 //Highlight the tooltip entry based on which stack the mouse is closest to.
-                if (allData.length > 2) {
+                if (allData.length > 0) {
                     var yValue = chart.yScale().invert(e.mouseY);
                     var yDistMax = Infinity, indexToHighlight = null;
                     allData.forEach(function(series,i) {
